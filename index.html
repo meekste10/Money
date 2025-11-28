@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Household Cashflow Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --accent: #17806d;
+      --accent-soft: #e0f0ec;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --danger: #b00020;
+      --border: #dddddd;
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    h1 span {
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      border: 1px solid #ececec;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .card-header p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    input[type="number"]:focus,
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+    }
+
+    .inline-inputs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .inline-inputs .field {
+      flex: 1;
+      min-width: 160px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    thead {
+      background: #fafafa;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ededed;
+      text-align: left;
+    }
+
+    th {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    td input[type="text"] {
+      padding: 4px 6px;
+    }
+
+    td input[type="number"] {
+      padding: 4px 6px;
+      text-align: right;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--danger);
+    }
+
+    .btn-accent:hover {
+      opacity: 0.9;
+    }
+
+    .btn-ghost:hover {
+      background: #f8d7da;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    .summary-row strong {
+      font-weight: 600;
+    }
+
+    .summary-row .value {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .summary-row.surplus {
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px dashed #dddddd;
+    }
+
+    .summary-row.surplus .value {
+      font-size: 1.05rem;
+    }
+
+    .surplus-positive {
+      color: #0b6b3a;
+    }
+
+    .surplus-negative {
+      color: #b00020;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.75rem;
+      margin-top: 4px;
+    }
+
+    .footer-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      .card {
+        padding: 14px;
+      }
+      table th:nth-child(3),
+      table td:nth-child(3) {
+        width: 90px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>
+      Household Cashflow Planner
+      <span>• Meeks</span>
+    </h1>
+    <p class="tagline">
+      Monthly view of money in ➜ money out ➜ margin. Edit anything, add rows, and your changes will auto-save in this browser.
+    </p>
+
+    <!-- Income Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>1. Monthly Income Baseline</h2>
+          <p>
+            This is your <strong>available cash</strong> after taxes, 401(k), health/dental/vision, and mortgage.
+          </p>
+        </div>
+        <div class="pill">
+          Current assumption: You $70k + Wife $45k base
+        </div>
+      </div>
+
+      <div class="inline-inputs">
+        <div class="field">
+          <label for="monthlyIncome">
+            Monthly available income (after taxes, 401k, insurance, mortgage)
+          </label>
+          <input
+            id="monthlyIncome"
+            type="number"
+            min="0"
+            step="0.01"
+            value="4600"
+          />
+        </div>
+      </div>
+
+      <p class="footer-note">
+        Tip: When Lauren’s commission grows, just bump this number up and watch the surplus adjust.
+      </p>
+    </div>
+
+    <!-- Expenses Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>2. Monthly Expenses</h2>
+          <p>Edit, add, or remove categories. Amounts are per month.</p>
+        </div>
+      </div>
+
+      <table id="expenseTable">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Amount (per month)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be injected by JavaScript -->
+        </tbody>
+      </table>
+
+      <button class="btn btn-accent" id="addRowBtn" type="button">
+        + Add Expense
+      </button>
+
+      <div class="summary-row">
+        <span><strong>Total Monthly Expenses</strong></span>
+        <span class="value" id="totalExpenses">$0.00</span>
+      </div>
+
+      <div class="summary-row surplus">
+        <span><strong>Monthly Surplus (what's left)</strong></span>
+        <span class="value" id="monthlySurplus">$0.00</span>
+      </div>
+
+      <p class="footer-note">
+        Surplus is what’s available for savings, extra debt payoff (if any reappears), travel, or just margin.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // ---- Default data based on our conversation ----
+    const DEFAULT_DATA = {
+      monthlyIncome: 4600, // after taxes, 401k, insurance, mortgage
+      expenses: [
+        { name: "School Tuition", amount: 600 },
+        { name: "Groceries", amount: 600 },
+        { name: "Eating Out (15× @ $70)", amount: 1050 },
+        { name: "Pest Control (Cook's)", amount: 37 },
+        { name: "Lawn Maintenance (averaged)", amount: 25 },
+        { name: "Streaming & Subscriptions", amount: 123 },
+        { name: "Robinhood Auto-Invest", amount: 15 },
+        { name: "Fuel", amount: 300 },
+        { name: "Cell Phones", amount: 100 },
+        { name: "Internet", amount: 120 },
+        { name: "Gas (Spire)", amount: 70 },
+        { name: "Power", amount: 190 },
+        { name: "Water / Sewer / Garbage", amount: 58 },
+        { name: "Everything Else (kids, gifts, supplies)", amount: 200 }
+      ]
+    };
+
+    const STORAGE_KEY = "meek_household_cashflow_v1";
+
+    const incomeInput = document.getElementById("monthlyIncome");
+    const expenseTableBody = document.querySelector("#expenseTable tbody");
+    const totalExpensesEl = document.getElementById("totalExpenses");
+    const monthlySurplusEl = document.getElementById("monthlySurplus");
+    const addRowBtn = document.getElementById("addRowBtn");
+
+    function loadData() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (!stored) return DEFAULT_DATA;
+        const parsed = JSON.parse(stored);
+        // basic sanity check
+        if (!parsed || typeof parsed !== "object") return DEFAULT_DATA;
+        if (!Array.isArray(parsed.expenses)) parsed.expenses = DEFAULT_DATA.expenses;
+        if (typeof parsed.monthlyIncome !== "number") parsed.monthlyIncome = DEFAULT_DATA.monthlyIncome;
+        return parsed;
+      } catch (e) {
+        console.warn("Could not load stored data, using defaults.", e);
+        return DEFAULT_DATA;
+      }
+    }
+
+    function saveData() {
+      const data = {
+        monthlyIncome: parseFloat(incomeInput.value) || 0,
+        expenses: []
+      };
+      const rows = expenseTableBody.querySelectorAll("tr");
+      rows.forEach(row => {
+        const nameInput = row.querySelector(".expense-name");
+        const amountInput = row.querySelector(".expense-amount");
+        const name = nameInput.value.trim();
+        const amount = parseFloat(amountInput.value) || 0;
+        if (name || amount > 0) {
+          data.expenses.push({ name, amount });
+        }
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function formatCurrency(value) {
+      return "$" + value.toFixed(2);
+    }
+
+    function recalc() {
+      const income = parseFloat(incomeInput.value) || 0;
+      let totalExpenses = 0;
+
+      const amountInputs = expenseTableBody.querySelectorAll(".expense-amount");
+      amountInputs.forEach(input => {
+        const val = parseFloat(input.value);
+        if (!isNaN(val)) totalExpenses += val;
+      });
+
+      const surplus = income - totalExpenses;
+
+      totalExpensesEl.textContent = formatCurrency(totalExpenses);
+      monthlySurplusEl.textContent = formatCurrency(surplus);
+
+      monthlySurplusEl.classList.remove("surplus-positive", "surplus-negative");
+      if (surplus >= 0) {
+        monthlySurplusEl.classList.add("surplus-positive");
+      } else {
+        monthlySurplusEl.classList.add("surplus-negative");
+      }
+
+      saveData();
+    }
+
+    function createExpenseRow(name = "", amount = 0) {
+      const tr = document.createElement("tr");
+
+      const nameTd = document.createElement("td");
+      const amountTd = document.createElement("td");
+      const actionTd = document.createElement("td");
+
+      const nameInput = document.createElement("input");
+      nameInput.type = "text";
+      nameInput.value = name;
+      nameInput.className = "expense-name";
+      nameInput.addEventListener("input", recalc);
+
+      const amountInput = document.createElement("input");
+      amountInput.type = "number";
+      amountInput.step = "0.01";
+      amountInput.min = "0";
+      amountInput.value = amount;
+      amountInput.className = "expense-amount";
+      amountInput.addEventListener("input", recalc);
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.className = "btn btn-ghost";
+      deleteBtn.textContent = "Delete";
+      deleteBtn.addEventListener("click", () => {
+        tr.remove();
+        recalc();
+      });
+
+      nameTd.appendChild(nameInput);
+      amountTd.appendChild(amountInput);
+      actionTd.appendChild(deleteBtn);
+
+      tr.appendChild(nameTd);
+      tr.appendChild(amountTd);
+      tr.appendChild(actionTd);
+
+      return tr;
+    }
+
+    function init() {
+      const data = loadData();
+
+      incomeInput.value = data.monthlyIncome.toFixed(2);
+
+      expenseTableBody.innerHTML = "";
+      data.expenses.forEach(exp => {
+        const row = createExpenseRow(exp.name, exp.amount);
+        expenseTableBody.appendChild(row);
+      });
+
+      incomeInput.addEventListener("input", recalc);
+      addRowBtn.addEventListener("click", () => {
+        const newRow = createExpenseRow("", 0);
+        expenseTableBody.appendChild(newRow);
+        recalc();
+      });
+
+      recalc();
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
