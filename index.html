@@ -1,165 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Holland Homes • Employee Portal Prototype</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Household Cashflow Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
       --bg: #f5f5f7;
       --card-bg: #ffffff;
-      --accent: #0a7b83;
-      --accent-soft: #e2f4f5;
-      --accent-dark: #06545a;
+      --accent: #17806d;
+      --accent-soft: #e0f0ec;
       --text-main: #222222;
       --text-muted: #666666;
-      --border: #dddddd;
       --danger: #b00020;
-      --radius: 12px;
+      --border: #dddddd;
+      --radius: 10px;
     }
 
     * {
       box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
       margin: 0;
       padding: 20px;
-      background: radial-gradient(circle at top left, #e2f4f5 0, #f5f5f7 45%);
+      background: var(--bg);
       color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
     }
 
-    .app-shell {
-      max-width: 1100px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    header {
+    h1 {
+      margin-top: 0;
+      font-size: 1.8rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      padding: 8px 4px;
+      gap: 0.4rem;
     }
 
-    .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .brand-title {
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .brand-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .tag-pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-      font-size: 0.8rem;
-      white-space: nowrap;
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
-      gap: 16px;
-      align-items: stretch;
+    h1 span {
+      font-size: 1.2rem;
+      color: var(--accent);
     }
 
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
       padding: 18px 20px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      margin-bottom: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      border: 1px solid #ececec;
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
+      align-items: baseline;
+      gap: 1rem;
     }
 
     .card-header h2 {
-      margin: 0 0 4px;
+      margin: 0;
       font-size: 1.1rem;
     }
 
     .card-header p {
       margin: 0;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
     }
 
     label {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
       display: block;
       margin-bottom: 4px;
     }
 
-    select,
-    input[type="text"],
-    input[type="password"] {
+    input[type="number"],
+    input[type="text"] {
       width: 100%;
-      padding: 8px 10px;
-      border-radius: 8px;
+      padding: 6px 8px;
+      border-radius: 6px;
       border: 1px solid var(--border);
-      font-size: 0.9rem;
-      background: #fbfbfb;
+      font-size: 0.95rem;
     }
 
-    select:focus,
-    input[type="text"]:focus,
-    input[type="password"]:focus {
+    input[type="number"]:focus,
+    input[type="text"]:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 2px var(--accent-soft);
-      background: #ffffff;
     }
 
-    .field-row {
+    .inline-inputs {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      gap: 12px;
+      flex-wrap: wrap;
       margin-top: 10px;
     }
 
-    .field-inline {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .field-inline .field {
+    .inline-inputs .field {
       flex: 1;
       min-width: 160px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    thead {
+      background: #fafafa;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ededed;
+      text-align: left;
+    }
+
+    th {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    td input[type="text"] {
+      padding: 4px 6px;
+    }
+
+    td input[type="number"] {
+      padding: 4px 6px;
+      text-align: right;
     }
 
     .btn {
       border: none;
       border-radius: 999px;
-      padding: 8px 16px;
+      padding: 7px 14px;
       font-size: 0.9rem;
       cursor: pointer;
       display: inline-flex;
@@ -170,504 +155,332 @@
     .btn-accent {
       background: var(--accent);
       color: #ffffff;
-      font-weight: 500;
-    }
-
-    .btn-accent:hover {
-      opacity: 0.92;
     }
 
     .btn-ghost {
       background: transparent;
-      color: var(--text-muted);
+      color: var(--danger);
+    }
+
+    .btn-accent:hover {
+      opacity: 0.9;
     }
 
     .btn-ghost:hover {
-      background: rgba(0, 0, 0, 0.03);
+      background: #f8d7da;
     }
 
-    .hint {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .error {
-      font-size: 0.8rem;
-      color: var(--danger);
-      margin-top: 4px;
-    }
-
-    .login-footer-note {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 10px;
-    }
-
-    /* Dashboard layout */
-    .dashboard {
-      display: none;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .dashboard.visible {
+    .summary-row {
       display: flex;
-    }
-
-    .user-summary {
-      display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
+      margin-top: 10px;
+      font-size: 0.95rem;
     }
 
-    .user-main {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .user-name {
+    .summary-row strong {
       font-weight: 600;
+    }
+
+    .summary-row .value {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .summary-row.surplus {
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px dashed #dddddd;
+    }
+
+    .summary-row.surplus .value {
       font-size: 1.05rem;
     }
 
-    .user-meta {
+    .surplus-positive {
+      color: #0b6b3a;
+    }
+
+    .surplus-negative {
+      color: #b00020;
+    }
+
+    .tagline {
       font-size: 0.85rem;
       color: var(--text-muted);
+      margin-top: 4px;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3px 10px;
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
       border-radius: 999px;
-      font-size: 0.75rem;
-      background: #f0f0f0;
-      color: #444;
-      margin-right: 4px;
-      margin-top: 2px;
-    }
-
-    .badge-role {
       background: var(--accent-soft);
-      color: var(--accent-dark);
+      color: var(--accent);
+      font-size: 0.75rem;
+      margin-top: 4px;
     }
 
-    .block-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .tile {
-      border-radius: 10px;
-      border: 1px solid #ededed;
-      padding: 10px 12px;
-      background: #fafafa;
-    }
-
-    .tile h3 {
-      margin: 0 0 4px;
-      font-size: 0.9rem;
-    }
-
-    .tile p {
-      margin: 0;
+    .footer-note {
       font-size: 0.8rem;
       color: var(--text-muted);
+      margin-top: 4px;
     }
 
-    .tile-strong {
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .section-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin: 8px 0 4px;
-    }
-
-    .list {
-      list-style: none;
-      padding-left: 0;
-      margin: 2px 0 0;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    .list li {
-      padding: 3px 0;
-    }
-
-    .role-label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    @media (max-width: 840px) {
-      main {
-        grid-template-columns: 1fr;
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      .card {
+        padding: 14px;
+      }
+      table th:nth-child(3),
+      table td:nth-child(3) {
+        width: 90px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <header>
-      <div class="brand">
-        <div class="brand-title">Holland Homes</div>
-        <div class="brand-subtitle">Internal Portal • Prototype View</div>
+  <div class="app">
+    <h1>
+      Household Cashflow Planner
+      <span>• Meeks</span>
+    </h1>
+    <p class="tagline">
+      Monthly view of money in ➜ money out ➜ margin. Edit anything, add rows, and your changes will auto-save in this browser.
+    </p>
+
+    <!-- Income Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>1. Monthly Income Baseline</h2>
+          <p>
+            This is your <strong>available cash</strong> after taxes, 401(k), health/dental/vision, and mortgage.
+          </p>
+        </div>
+        <div class="pill">
+          Current assumption: You $70k + Wife $45k base
+        </div>
       </div>
-      <div class="tag-pill">Demo only • Not real data</div>
-    </header>
 
-    <main>
-      <!-- LEFT: Login / Switch User -->
-      <section class="card" id="loginCard">
-        <div class="card-header">
-          <div>
-            <h2>1. Choose a Demo Login</h2>
-            <p>
-              Pick a persona to see how the employee portal could feel for
-              different roles.
-            </p>
-          </div>
+      <div class="inline-inputs">
+        <div class="field">
+          <label for="monthlyIncome">
+            Monthly available income (after taxes, 401k, insurance, mortgage)
+          </label>
+          <input
+            id="monthlyIncome"
+            type="number"
+            min="0"
+            step="0.01"
+            value="4600"
+          />
         </div>
+      </div>
 
-        <div class="field-row">
-          <div class="field">
-            <label for="userSelect">Demo user</label>
-            <select id="userSelect">
-              <!-- Populated by JS -->
-            </select>
-          </div>
+      <p class="footer-note">
+        Tip: When Lauren’s commission grows, just bump this number up and watch the surplus adjust.
+      </p>
+    </div>
 
-          <div class="field-inline">
-            <div class="field">
-              <label for="accessPhrase">Access phrase (for vibes only)</label>
-              <input
-                type="password"
-                id="accessPhrase"
-                placeholder="e.g. purpose>people"
-              />
-              <div class="hint">
-                This doesn't secure anything. It's just part of the experience.
-              </div>
-            </div>
-          </div>
-
-          <div class="field-inline">
-            <button class="btn btn-accent" id="enterPortalBtn" type="button">
-              ➜ Enter Portal
-            </button>
-            <button class="btn btn-ghost" id="fakeResetBtn" type="button">
-              Reset to defaults
-            </button>
-          </div>
-
-          <div class="error" id="loginError" style="display: none"></div>
-
-          <div class="login-footer-note">
-            This prototype runs entirely in your browser. No real logins, no
-            server, no private info. Think of it as Holland Homes' <em>portal
-            mood board</em>.
-          </div>
+    <!-- Expenses Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>2. Monthly Expenses</h2>
+          <p>Edit, add, or remove categories. Amounts are per month.</p>
         </div>
-      </section>
+      </div>
 
-      <!-- RIGHT: Dashboard Preview -->
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <h2>2. Dashboard Preview</h2>
-            <p>
-              View changes based on which demo user is "logged in".
-            </p>
-          </div>
-        </div>
+      <table id="expenseTable">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Amount (per month)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be injected by JavaScript -->
+        </tbody>
+      </table>
 
-        <div id="dashboard" class="dashboard">
-          <div class="user-summary">
-            <div class="user-main">
-              <div class="user-name" id="dbUserName">—</div>
-              <div class="user-meta" id="dbUserMeta"></div>
-              <div id="dbBadges"></div>
-            </div>
-            <div>
-              <button class="btn btn-ghost" id="switchUserBtn" type="button">
-                ⇄ Switch user
-              </button>
-            </div>
-          </div>
+      <button class="btn btn-accent" id="addRowBtn" type="button">
+        + Add Expense
+      </button>
 
-          <div class="block-grid" id="coreTiles"></div>
+      <div class="summary-row">
+        <span><strong>Total Monthly Expenses</strong></span>
+        <span class="value" id="totalExpenses">$0.00</span>
+      </div>
 
-          <div class="section-title">Role-Specific Panels</div>
-          <div class="block-grid" id="roleTiles"></div>
-        </div>
+      <div class="summary-row surplus">
+        <span><strong>Monthly Surplus (what's left)</strong></span>
+        <span class="value" id="monthlySurplus">$0.00</span>
+      </div>
 
-        <div id="dashboardPlaceholder" class="hint" style="margin-top: 12px;">
-          Choose a demo user on the left to see their portal view.
-        </div>
-      </section>
-    </main>
+      <p class="footer-note">
+        Surplus is what’s available for savings, extra debt payoff (if any reappears), travel, or just margin.
+      </p>
+    </div>
   </div>
 
   <script>
-    // -----------------------------
-    // Demo employee data (fake, in-browser)
-    // -----------------------------
-    const DEMO_USERS = [
-      {
-        id: "austin",
-        name: "Austin Meek",
-        role: "People & Systems",
-        department: "People / HR",
-        location: "Auburn, AL",
-        accessPhraseHint: "purpose>people",
-        type: "hr",
-        badges: ["Admin", "Sees all teams"],
-        coreTiles: [
-          {
-            title: "Today’s Focus",
-            strong: "APAC wrap-up • 401k rollout",
-            note: "3 open items for leadership, 2 pending signatures."
-          },
-          {
-            title: "People Snapshot",
-            strong: "42 active employees",
-            note: "3 new hires in the last 30 days, 0 offboarding in progress."
-          }
-        ],
-        roleTiles: [
-          {
-            title: "HR Tools",
-            lines: [
-              "• View all employee profiles",
-              "• APAC dashboards & PDF links",
-              "• Benefits & 401k reference hub"
-            ]
-          },
-          {
-            title: "Signals",
-            lines: [
-              "• Watch burnout radar for Production",
-              "• Confirm device rollout list with Cloudable"
-            ]
-          }
-        ]
-      },
-      {
-        id: "lauren",
-        name: "Lauren Meek",
-        role: "Sales Advisor",
-        department: "Sales",
-        location: "Auburn, AL",
-        accessPhraseHint: "warm-welcome",
-        type: "sales",
-        badges: ["Commission-based", "Client-facing"],
-        coreTiles: [
-          {
-            title: "This Week",
-            strong: "3 active prospects",
-            note: "2 second-showings, 1 new lead from online."
-          },
-          {
-            title: "Commission Pace",
-            strong: "On track",
-            note: "You’re pacing at 92% of monthly goal."
-          }
-        ],
-        roleTiles: [
-          {
-            title: "Sales Toolkit",
-            lines: [
-              "• Quick links to spec sheets & pricing",
-              "• Contract templates & option sheets",
-              "• CRM notes for this week’s buyers"
-            ]
-          },
-          {
-            title: "Support",
-            lines: [
-              "• Message People/HR about PTO or benefits",
-              "• IT help for tablet/CRM questions"
-            ]
-          }
-        ]
-      },
-      {
-        id: "max",
-        name: "Max Daily",
-        role: "Project Leader",
-        department: "Production",
-        location: "Field / Auburn-Opelika",
-        accessPhraseHint: "boots-on-ground",
-        type: "pl",
-        badges: ["Field", "Schedule-critical"],
-        coreTiles: [
-          {
-            title: "Jobsite Snapshot",
-            strong: "4 active jobs",
-            note: "2 ahead of schedule, 1 tight on framing inspection."
-          },
-          {
-            title: "Today’s Checklist",
-            strong: "Framing, punch, client walk",
-            note: "3 key milestones, 5 subs lined up."
-          }
-        ],
-        roleTiles: [
-          {
-            title: "Production Toolkit",
-            lines: [
-              "• Job schedule & selections in one place",
-              "• Warranty notes & red flags",
-              "• Photo upload hub for job progress"
-            ]
-          },
-          {
-            title: "Support & Admin",
-            lines: [
-              "• Request devices/equipment",
-              "• Submit time-off requests",
-              "• Quick channel to division manager"
-            ]
-          }
-        ]
-      }
-    ];
+    // ---- Default data based on our conversation ----
+    const DEFAULT_DATA = {
+      monthlyIncome: 4600, // after taxes, 401k, insurance, mortgage
+      expenses: [
+        { name: "School Tuition", amount: 600 },
+        { name: "Groceries", amount: 600 },
+        { name: "Eating Out (15× @ $70)", amount: 1050 },
+        { name: "Pest Control (Cook's)", amount: 37 },
+        { name: "Lawn Maintenance (averaged)", amount: 25 },
+        { name: "Streaming & Subscriptions", amount: 123 },
+        { name: "Robinhood Auto-Invest", amount: 15 },
+        { name: "Fuel", amount: 300 },
+        { name: "Cell Phones", amount: 100 },
+        { name: "Internet", amount: 120 },
+        { name: "Gas (Spire)", amount: 70 },
+        { name: "Power", amount: 190 },
+        { name: "Water / Sewer / Garbage", amount: 58 },
+        { name: "Everything Else (kids, gifts, supplies)", amount: 200 }
+      ]
+    };
 
-    const LOCAL_KEY = "meek_demo_portal_selected_user_v1";
+    const STORAGE_KEY = "meek_household_cashflow_v1";
 
-    // DOM refs
-    const userSelect = document.getElementById("userSelect");
-    const accessPhraseInput = document.getElementById("accessPhrase");
-    const enterPortalBtn = document.getElementById("enterPortalBtn");
-    const fakeResetBtn = document.getElementById("fakeResetBtn");
-    const loginErrorEl = document.getElementById("loginError");
+    const incomeInput = document.getElementById("monthlyIncome");
+    const expenseTableBody = document.querySelector("#expenseTable tbody");
+    const totalExpensesEl = document.getElementById("totalExpenses");
+    const monthlySurplusEl = document.getElementById("monthlySurplus");
+    const addRowBtn = document.getElementById("addRowBtn");
 
-    const dashboard = document.getElementById("dashboard");
-    const dbUserName = document.getElementById("dbUserName");
-    const dbUserMeta = document.getElementById("dbUserMeta");
-    const dbBadges = document.getElementById("dbBadges");
-    const coreTiles = document.getElementById("coreTiles");
-    const roleTiles = document.getElementById("roleTiles");
-    const dashboardPlaceholder = document.getElementById("dashboardPlaceholder");
-    const switchUserBtn = document.getElementById("switchUserBtn");
-
-    function initUserSelect() {
-      DEMO_USERS.forEach((user) => {
-        const opt = document.createElement("option");
-        opt.value = user.id;
-        opt.textContent = `${user.name} — ${user.role}`;
-        userSelect.appendChild(opt);
-      });
-
-      const storedId = localStorage.getItem(LOCAL_KEY);
-      if (storedId && DEMO_USERS.find((u) => u.id === storedId)) {
-        userSelect.value = storedId;
-        renderDashboard(storedId);
+    function loadData() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (!stored) return DEFAULT_DATA;
+        const parsed = JSON.parse(stored);
+        // basic sanity check
+        if (!parsed || typeof parsed !== "object") return DEFAULT_DATA;
+        if (!Array.isArray(parsed.expenses)) parsed.expenses = DEFAULT_DATA.expenses;
+        if (typeof parsed.monthlyIncome !== "number") parsed.monthlyIncome = DEFAULT_DATA.monthlyIncome;
+        return parsed;
+      } catch (e) {
+        console.warn("Could not load stored data, using defaults.", e);
+        return DEFAULT_DATA;
       }
     }
 
-    function renderDashboard(userId) {
-      const user = DEMO_USERS.find((u) => u.id === userId);
-      if (!user) return;
-
-      loginErrorEl.style.display = "none";
-
-      dbUserName.textContent = user.name;
-      dbUserMeta.textContent = `${user.role} • ${user.department} • ${user.location}`;
-
-      dbBadges.innerHTML = "";
-      user.badges.forEach((b) => {
-        const span = document.createElement("span");
-        span.className = "badge badge-role";
-        span.textContent = b;
-        dbBadges.appendChild(span);
+    function saveData() {
+      const data = {
+        monthlyIncome: parseFloat(incomeInput.value) || 0,
+        expenses: []
+      };
+      const rows = expenseTableBody.querySelectorAll("tr");
+      rows.forEach(row => {
+        const nameInput = row.querySelector(".expense-name");
+        const amountInput = row.querySelector(".expense-amount");
+        const name = nameInput.value.trim();
+        const amount = parseFloat(amountInput.value) || 0;
+        if (name || amount > 0) {
+          data.expenses.push({ name, amount });
+        }
       });
-
-      coreTiles.innerHTML = "";
-      user.coreTiles.forEach((tile) => {
-        const div = document.createElement("div");
-        div.className = "tile";
-        div.innerHTML = `
-          <h3>${tile.title}</h3>
-          <div class="tile-strong">${tile.strong}</div>
-          <p>${tile.note}</p>
-        `;
-        coreTiles.appendChild(div);
-      });
-
-      roleTiles.innerHTML = "";
-      user.roleTiles.forEach((tile) => {
-        const div = document.createElement("div");
-        div.className = "tile";
-        const ulItems = tile.lines
-          .map((line) => `<li>${line}</li>`)
-          .join("");
-        div.innerHTML = `
-          <h3>${tile.title}</h3>
-          <ul class="list">${ulItems}</ul>
-        `;
-        roleTiles.appendChild(div);
-      });
-
-      dashboard.classList.add("visible");
-      dashboardPlaceholder.style.display = "none";
-
-      localStorage.setItem(LOCAL_KEY, user.id);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
 
-    enterPortalBtn.addEventListener("click", () => {
-      const selectedId = userSelect.value;
-      const user = DEMO_USERS.find((u) => u.id === selectedId);
+    function formatCurrency(value) {
+      return "$" + value.toFixed(2);
+    }
 
-      if (!user) {
-        loginErrorEl.textContent = "Please choose a demo user.";
-        loginErrorEl.style.display = "block";
-        return;
-      }
+    function recalc() {
+      const income = parseFloat(incomeInput.value) || 0;
+      let totalExpenses = 0;
 
-      // Light UX check: if phrase field is empty, gently nudge but still allow.
-      const phrase = accessPhraseInput.value.trim();
-      if (!phrase) {
-        loginErrorEl.textContent =
-          "Access phrase is optional in this prototype, but try something like: " +
-          user.accessPhraseHint;
-        loginErrorEl.style.display = "block";
+      const amountInputs = expenseTableBody.querySelectorAll(".expense-amount");
+      amountInputs.forEach(input => {
+        const val = parseFloat(input.value);
+        if (!isNaN(val)) totalExpenses += val;
+      });
+
+      const surplus = income - totalExpenses;
+
+      totalExpensesEl.textContent = formatCurrency(totalExpenses);
+      monthlySurplusEl.textContent = formatCurrency(surplus);
+
+      monthlySurplusEl.classList.remove("surplus-positive", "surplus-negative");
+      if (surplus >= 0) {
+        monthlySurplusEl.classList.add("surplus-positive");
       } else {
-        loginErrorEl.style.display = "none";
+        monthlySurplusEl.classList.add("surplus-negative");
       }
 
-      renderDashboard(selectedId);
-    });
+      saveData();
+    }
 
-    switchUserBtn.addEventListener("click", () => {
-      // Just focus back on selector to invite switching
-      userSelect.focus();
-    });
+    function createExpenseRow(name = "", amount = 0) {
+      const tr = document.createElement("tr");
 
-    fakeResetBtn.addEventListener("click", () => {
-      localStorage.removeItem(LOCAL_KEY);
-      accessPhraseInput.value = "";
-      dashboard.classList.remove("visible");
-      dashboardPlaceholder.style.display = "block";
-      loginErrorEl.style.display = "none";
-    });
+      const nameTd = document.createElement("td");
+      const amountTd = document.createElement("td");
+      const actionTd = document.createElement("td");
 
-    document.addEventListener("DOMContentLoaded", initUserSelect);
+      const nameInput = document.createElement("input");
+      nameInput.type = "text";
+      nameInput.value = name;
+      nameInput.className = "expense-name";
+      nameInput.addEventListener("input", recalc);
+
+      const amountInput = document.createElement("input");
+      amountInput.type = "number";
+      amountInput.step = "0.01";
+      amountInput.min = "0";
+      amountInput.value = amount;
+      amountInput.className = "expense-amount";
+      amountInput.addEventListener("input", recalc);
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.className = "btn btn-ghost";
+      deleteBtn.textContent = "Delete";
+      deleteBtn.addEventListener("click", () => {
+        tr.remove();
+        recalc();
+      });
+
+      nameTd.appendChild(nameInput);
+      amountTd.appendChild(amountInput);
+      actionTd.appendChild(deleteBtn);
+
+      tr.appendChild(nameTd);
+      tr.appendChild(amountTd);
+      tr.appendChild(actionTd);
+
+      return tr;
+    }
+
+    function init() {
+      const data = loadData();
+
+      incomeInput.value = data.monthlyIncome.toFixed(2);
+
+      expenseTableBody.innerHTML = "";
+      data.expenses.forEach(exp => {
+        const row = createExpenseRow(exp.name, exp.amount);
+        expenseTableBody.appendChild(row);
+      });
+
+      incomeInput.addEventListener("input", recalc);
+      addRowBtn.addEventListener("click", () => {
+        const newRow = createExpenseRow("", 0);
+        expenseTableBody.appendChild(newRow);
+        recalc();
+      });
+
+      recalc();
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
   </script>
 </body>
 </html>
